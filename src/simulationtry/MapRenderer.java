@@ -5,6 +5,7 @@ public class MapRenderer {
 	public void render(GameMap map) {
 		int rows = map.getLength();
 		int cols = map.getWidth();
+		Coordinates coord = new Coordinates();
 
 		System.out.print("  ");
 		for (int col = 0; col < cols; col++) {
@@ -18,15 +19,15 @@ public class MapRenderer {
 				Coordinates coordinates = new Coordinates(row, column);
 				if (map.isEmptySquare(coordinates)) {
 					line += getSpringForEmptySquare(coordinates);
+
 				} else {
 					line += map.getEntityAt(coordinates);
+
 				}
 			}
 			System.out.println(line);
 		}
 
-		// System.out.println("Движение из координат" +
-		// map.getCoordinates(map.getEntityAt(Coordinates)) + "в координаты " + );
 	}
 
 	private String getSpringForEmptySquare(Coordinates coordinates) {

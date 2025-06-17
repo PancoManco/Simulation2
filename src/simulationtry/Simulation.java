@@ -18,6 +18,7 @@ public class Simulation {
 			renderer.render(map);
 			new turnActions().makeShift(map);
 			i++;
+
 			System.out.println();
 		}
 
