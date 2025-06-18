@@ -22,22 +22,23 @@ public class turnActions extends Action {
 
 	}
 
-	public void makeShift(GameMap map) {
-		int i = 0;
+	public void makeShift(GameMap map, boolean isFirstIteration) {
+		MovementLogger logger = new MovementLogger();
+
 		for (Creature creature : getAllCreature(map)) {
 			Coordinates from = map.getCoordinates(creature);
 
-			if (i == 0) {
-				i++;
+			if (isFirstIteration) {
+				// При первой итерации выводим начальные позиции
 				System.out.printf("[%s] Начальная позиция: [%d:%d]\n", creature.getClass().getSimpleName(),
 						from.getRow(), from.getCollumn());
-
 			} else {
+				// Начиная со второй итерации выполняем перемещение и логируем его
 				creature.makeMove(map);
-				logger.logMovement(creature, from, map.getCoordinates(creature));
+				Coordinates to = map.getCoordinates(creature);
+				logger.logMovement(creature, from, to);
 			}
 		}
-
 	}
 
 	private Set<Creature> getAllCreature(GameMap map) {

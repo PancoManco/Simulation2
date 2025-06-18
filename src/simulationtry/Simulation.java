@@ -11,18 +11,15 @@ public class Simulation {
 		GameMap map = new GameMap();
 		new initActions().setupRandomEntityPositions(map);
 		MapRenderer renderer = new MapRenderer();
-		int i = 1;
+		int iterations = 3;
+		boolean isFirstIteration = true;
 
-		while (i < 4) {
-			System.out.println("day" + i);
+		for (int i = 1; i <= iterations; i++) {
+			System.out.println("\nИтерация " + i);
 			renderer.render(map);
-			new turnActions().makeShift(map);
-			i++;
-
-			System.out.println();
-
+			new turnActions().makeShift(map, isFirstIteration);
+			isFirstIteration = false; // после первой итерации флаг сбрасывается
 		}
-
 	}
 
 }
