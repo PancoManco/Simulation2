@@ -5,18 +5,22 @@ import java.util.Random;
 
 import simulationtry.Coordinates;
 import simulationtry.GameMap;
+import simulationtry.MovementLogger;
 import simulationtry.entities.Entity;
 
 public class Herbivore extends Creature {
+	private boolean hasMoved = false;
 
 	public Herbivore() {
 
 	}
 
 	public void makeMove(GameMap map) {
+		hasMoved = true;
 
 		Coordinates from = map.getCoordinates(this);
 
+		MovementLogger logger = new MovementLogger();
 		// Возможные направления движения (+1/-1 по оси X или Y)
 		Random random = new Random();
 		int dx = random.nextInt(3) - 1; // Смещение по оси X (-1, 0, +1)
@@ -46,6 +50,7 @@ public class Herbivore extends Creature {
 			map.getHashMap().remove(from);
 			// Помещаем существо на новые координаты
 			map.getHashMap().put(to, this);
+
 		}
 	}
 

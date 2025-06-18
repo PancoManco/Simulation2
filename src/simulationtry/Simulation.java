@@ -20,6 +20,7 @@ public class Simulation {
 			i++;
 
 			System.out.println();
+
 		}
 
 	}

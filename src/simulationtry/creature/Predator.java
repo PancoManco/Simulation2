@@ -4,8 +4,10 @@ import java.util.Random;
 
 import simulationtry.Coordinates;
 import simulationtry.GameMap;
+import simulationtry.MovementLogger;
 
 public class Predator extends Creature {
+	private boolean hasMoved = false;
 
 	public Predator() {
 	}
@@ -13,10 +15,11 @@ public class Predator extends Creature {
 	public void makeMove(GameMap map) {
 
 		Coordinates from = map.getCoordinates(this);
+		MovementLogger logger = new MovementLogger();
 
 		Random random = new Random();
-		int dx = random.nextInt(3) - 1; // Смещение по оси X (-1, 0, +1)
-		int dy = random.nextInt(3) - 1; // Смещение по оси Y (-1, 0, +1)
+		int dx = random.nextInt(3) - 1;
+		int dy = random.nextInt(3) - 1;
 
 		if (dx != 0 && dy != 0) {
 			// Выбираем случайное направление, оставляя одно нулевым
