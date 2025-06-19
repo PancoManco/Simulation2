@@ -2,6 +2,7 @@ package Actions;
 
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import simulationtry.Coordinates;
@@ -21,7 +22,13 @@ public class TurnActions extends Action {
 
 	public void makeShift(GameMap map, MovementLogger logger, boolean isFirstIteration) {
 		for (Creature creature : getAllCreature(map)) {
-			Coordinates from = map.getCoordinates(creature);
+			// Coordinates from = map.getCoordinates(creature);
+
+			Optional<Coordinates> optionalFrom = map.getCoordinates(creature);
+			if (optionalFrom.isEmpty()) {
+				return;
+			}
+			Coordinates from = optionalFrom.get();
 
 			if (isFirstIteration) {
 				System.out.printf("[%s] Начальная позиция: [%d:%d]\n", creature.getClass().getSimpleName(),

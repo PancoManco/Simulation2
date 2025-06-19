@@ -2,6 +2,7 @@ package simulationtry;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 import simulationtry.entities.Entity;
@@ -34,13 +35,13 @@ public class GameMap {
 		return !entities.containsKey(coordinates);
 	}
 
-	public Coordinates getCoordinates(Entity entity) {
+	public Optional<Coordinates> getCoordinates(Entity entity) {
 		for (Map.Entry<Coordinates, Entity> entry : entities.entrySet()) {
 			if (entry.getValue().equals(entity)) {
-				return entry.getKey();
+				return Optional.of(entry.getKey());
 			}
 		}
-		throw new IllegalArgumentException("Сущность не найдена на карте.");
+		return Optional.empty();
 	}
 
 	public Entity getEntityAt(Coordinates coordinates) {

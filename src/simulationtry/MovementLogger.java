@@ -14,9 +14,9 @@ public class MovementLogger {
 		logEntries.add(log);
 	}
 
-	public void logCollision(Entity entity, Coordinates attemptedPosition) {
-		String log = String.format("[%s]: Столкновение на [%d:%d] — клетка занята.", entity.getClass().getSimpleName(),
-				attemptedPosition.getRow(), attemptedPosition.getCollumn());
+	public void logEating(Entity eater, String eatenType, Coordinates position) {
+		String log = String.format("[%s] съел %s на [%d:%d]", eater.getClass().getSimpleName(), eatenType,
+				position.getRow(), position.getCollumn());
 		logEntries.add(log);
 	}
 
@@ -24,6 +24,10 @@ public class MovementLogger {
 		for (String log : logEntries) {
 			System.out.println(log);
 		}
+		logEntries.clear();
+	}
+
+	public void clearLogs() {
 		logEntries.clear();
 	}
 }

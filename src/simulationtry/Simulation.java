@@ -1,12 +1,13 @@
 package simulationtry;
 
+import java.util.Scanner;
+
 import Actions.InitActions;
 import Actions.TurnActions;
 
 public class Simulation {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		GameMap map = new GameMap();
 		new InitActions().setupRandomEntityPositions(map);
 
@@ -14,24 +15,39 @@ public class Simulation {
 		TurnActions actions = new TurnActions();
 		MovementLogger logger = new MovementLogger();
 
-		int iterations = 3;
+		Scanner scanner = new Scanner(System.in);
+		boolean running = true;
 		boolean isFirstIteration = true;
 
-		for (int i = 1; i <= iterations; i++) {
-			System.out.println("\n=== ИТЕРАЦИЯ " + i + " ===");
+		int iteration = 0;
 
-			if (!isFirstIteration) {
-				actions.makeShift(map, logger, false); // перемещения
-			}
+		while (running) {
+			iteration++;
+			System.out.println("\n=== ИТЕРАЦИЯ " + iteration + " ===");
 
-			renderer.render(map); // карта после перемещений
+			// Очистим логи перед ходом, чтобы не скапливались старые записи
+			logger.clearLogs();
 
 			if (isFirstIteration) {
-				actions.makeShift(map, logger, true); // только начальные позиции
+				actions.makeShift(map, logger, true);
 				isFirstIteration = false;
+			} else {
+				actions.makeShift(map, logger, false);
 			}
 
-			logger.printLogs(); // логи перемещений
+			renderer.render(map);
+
+			logger.printLogs();
+
+			System.out.println("Введите 'q' для остановки симуляции, Enter для продолжения:");
+			String input = scanner.nextLine();
+			if ("q".equalsIgnoreCase(input)) {
+				running = false;
+				System.out.println("Симуляция остановлена.");
+				// Можно добавить здесь сохранение состояния в файл, если надо
+			}
 		}
+
+		scanner.close();
 	}
 }
