@@ -1,25 +1,37 @@
 package simulationtry;
 
-import Actions.initActions;
-import Actions.turnActions;
-import simulationtry.entities.Entity;
+import Actions.InitActions;
+import Actions.TurnActions;
 
 public class Simulation {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		GameMap map = new GameMap();
-		new initActions().setupRandomEntityPositions(map);
+		new InitActions().setupRandomEntityPositions(map);
+
 		MapRenderer renderer = new MapRenderer();
+		TurnActions actions = new TurnActions();
+		MovementLogger logger = new MovementLogger();
+
 		int iterations = 3;
 		boolean isFirstIteration = true;
 
 		for (int i = 1; i <= iterations; i++) {
-			System.out.println("\nИтерация " + i);
-			renderer.render(map);
-			new turnActions().makeShift(map, isFirstIteration);
-			isFirstIteration = false; // после первой итерации флаг сбрасывается
+			System.out.println("\n=== ИТЕРАЦИЯ " + i + " ===");
+
+			if (!isFirstIteration) {
+				actions.makeShift(map, logger, false); // перемещения
+			}
+
+			renderer.render(map); // карта после перемещений
+
+			if (isFirstIteration) {
+				actions.makeShift(map, logger, true); // только начальные позиции
+				isFirstIteration = false;
+			}
+
+			logger.printLogs(); // логи перемещений
 		}
 	}
-
 }

@@ -1,7 +1,5 @@
 package simulationtry;
 
-import java.util.Objects;
-
 public class Coordinates {
 
 	private int row, collumn;
@@ -34,21 +32,14 @@ public class Coordinates {
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (o == null || getClass() != o.getClass())
+		if (!(o instanceof Coordinates))
 			return false;
-
 		Coordinates that = (Coordinates) o;
-
-		if (row != that.row)
-			return false;
-		return collumn == that.collumn;
+		return row == that.row && collumn == that.collumn;
 	}
 
 	@Override
 	public int hashCode() {
-		int result = row;
-		result = 31 * result + collumn;
-		return result;
+		return 31 * row + collumn;
 	}
-
 }

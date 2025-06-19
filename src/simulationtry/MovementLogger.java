@@ -1,43 +1,29 @@
 package simulationtry;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import simulationtry.entities.Entity;
 
 public class MovementLogger {
-
-	private boolean isFirstIteration = true; // Признак первой итерации
+	private final List<String> logEntries = new ArrayList<>();
 
 	public void logMovement(Entity entity, Coordinates from, Coordinates to) {
-
-		System.out.printf("[%s]: Переместилось с [%d:%d] на [%d:%d]\n", entity.getClass().getSimpleName(),
+		String log = String.format("[%s]: Переместилось с [%d:%d] на [%d:%d]", entity.getClass().getSimpleName(),
 				from.getRow(), from.getCollumn(), to.getRow(), to.getCollumn());
-
+		logEntries.add(log);
 	}
 
-	public void resetLog() {
-		isFirstIteration = true; // сброс лога для следующей сессии
+	public void logCollision(Entity entity, Coordinates attemptedPosition) {
+		String log = String.format("[%s]: Столкновение на [%d:%d] — клетка занята.", entity.getClass().getSimpleName(),
+				attemptedPosition.getRow(), attemptedPosition.getCollumn());
+		logEntries.add(log);
 	}
 
-//	public void logMovementFirstIteration(GameMap map) {
-//
-//	
-//			System.out.printf("[%s] Начальная позиция: [%d:%d]\n", entity.getClass().getSimpleName(), from.getRow(),
-//					from.getCollumn());
-//			isFirstIteration = false; // Далее перейдем на режим отображения перемещений
-//
-//		
-//	}
-
-//	///
-//	public void setEntityNewCoordinates(Coordinates coordinates, Entity entity) {
-//		entities1.put(coordinates, entity);
-//
-//	}
-//
-//	public HashMap<Coordinates, Entity> getHashMapNewCoordinates() {
-//		return entities;
-//	}
-//	///
-
+	public void printLogs() {
+		for (String log : logEntries) {
+			System.out.println(log);
+		}
+		logEntries.clear();
+	}
 }

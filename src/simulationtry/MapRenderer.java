@@ -1,38 +1,35 @@
 package simulationtry;
 
+import simulationtry.entities.Entity;
+
 public class MapRenderer {
+
+	private final EntityRenderer entityRenderer = new EntityRenderer();
 
 	public void render(GameMap map) {
 		int rows = map.getLength();
 		int cols = map.getWidth();
-		Coordinates coord = new Coordinates();
 
-		System.out.print("  ");
+		System.out.print(" "); // 3 пробела для отступа под номер строки
 		for (int col = 0; col < cols; col++) {
-			System.out.printf("%2d", col);
+			// Выводим номер колонки, выровненный по центру шириной 3 символа
+			System.out.printf("%3d", col);
 		}
 		System.out.println();
+
 		for (int row = 0; row < rows; row++) {
-			System.out.printf("%2d ", row);
-			String line = "";
-			for (int column = 0; column < cols; column++) {
-				Coordinates coordinates = new Coordinates(row, column);
-				if (map.isEmptySquare(coordinates)) {
-					line += getSpringForEmptySquare(coordinates);
+			System.out.printf("%-3d", row);
 
+			for (int col = 0; col < cols; col++) {
+				Coordinates coord = new Coordinates(row, col);
+				Entity entity = map.getEntityAt(coord);
+				if (entity == null) {
+					System.out.printf("%-3s", "_");
 				} else {
-					line += map.getEntityAt(coordinates);
-
+					System.out.printf("%-3s", entityRenderer.getSymbol(entity));
 				}
 			}
-			System.out.println(line);
+			System.out.println();
 		}
-
 	}
-
-	private String getSpringForEmptySquare(Coordinates coordinates) {
-
-		return "_ ";
-	}
-
 }
